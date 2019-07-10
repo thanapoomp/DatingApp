@@ -25,10 +25,4 @@ export class NavComponent implements OnInit {
       this.router.navigate(['/members']);
     });
   }
-
-  logOut() {
-    localStorage.removeItem('token');
-    this.alertify.message('logged out');
-    this.router.navigate(['/home']);
-  }
 }
