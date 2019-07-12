@@ -6,6 +6,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -28,6 +29,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { LogoutComponent } from './logout/logout.component';
+import { PhotoEditComponent } from './members/photo-edit/photo-edit.component';
+
 
 
 export function tokenGetter() {
@@ -46,7 +49,8 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      LogoutComponent
+      LogoutComponent,
+      PhotoEditComponent
    ],
    imports: [
       BrowserModule,
@@ -62,7 +66,8 @@ export function tokenGetter() {
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: ['localhost/api/auth']
          }
-      })
+      }),
+      FileUploadModule
    ],
    providers: [
       AuthService,

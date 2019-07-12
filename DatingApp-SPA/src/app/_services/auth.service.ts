@@ -45,4 +45,11 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
+  loggedInId(): number {
+    const token = localStorage.getItem('token');
+    this.decodedToken = this.jwtHelper.decodeToken(token);
+    const id = this.decodedToken.nameid;
+    return id;
+  }
+
 }
