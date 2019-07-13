@@ -13,8 +13,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class PhotoEditComponent implements OnInit {
   @Input() photos: Photo[];
-  @Output() getMemberPhotoChange = new EventEmitter<string>();
-  uploader: FileUploader ;
+  uploader: FileUploader;
   hasBaseDropZoneOver = false;
   baseUrl = environment.apiUrl;
   currentMain: Photo;
@@ -40,7 +39,7 @@ export class PhotoEditComponent implements OnInit {
       maxFileSize: 10 * 1024 * 1024
     });
 
-    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false; };
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
@@ -61,10 +60,22 @@ export class PhotoEditComponent implements OnInit {
     this.userService.setMainPhoto(this.authService.loggedInId(), photo.id).subscribe(() => {
       this.currentMain = this.photos.filter(p => p.isMain === true)[0];
       this.currentMain.isMain = false;
-      this.getMemberPhotoChange.emit(photo.url);
+      this.authService.changeMemberPhoto(photo.url);
+      console.log(photo.url);
       photo.isMain = true;
     }, error => {
       this.alertify.error(error);
+    });
+  }
+
+  deletePhoto(id: number) {
+    this.alertify.confirm('Are you sure you want to delete this photo?', () => {
+      this.userService.deletePhoto(this.authService.loggedInId(), id).subscribe(() => {
+        const photoIndex = this.photos.findIndex(p => p.id === id);
+        this.photos.splice(photoIndex, 1);
+      }, error => {
+        this.alertify.error(error);
+      });
     });
   }
 }
