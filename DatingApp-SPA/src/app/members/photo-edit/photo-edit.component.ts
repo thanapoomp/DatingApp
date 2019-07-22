@@ -52,6 +52,9 @@ export class PhotoEditComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
+        if (photo.isMain) {
+          this.authService.changeMemberPhoto(photo.url);
+        }
       }
     };
   }
@@ -61,7 +64,6 @@ export class PhotoEditComponent implements OnInit {
       this.currentMain = this.photos.filter(p => p.isMain === true)[0];
       this.currentMain.isMain = false;
       this.authService.changeMemberPhoto(photo.url);
-      console.log(photo.url);
       photo.isMain = true;
     }, error => {
       this.alertify.error(error);
