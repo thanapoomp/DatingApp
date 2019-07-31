@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
 import { Photo } from 'src/app/_models/photo';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
@@ -71,7 +71,7 @@ export class PhotoEditComponent implements OnInit {
   }
 
   deletePhoto(id: number) {
-    this.alertify.confirm('Are you sure you want to delete this photo?', () => {
+    this.alertify.confirm('Caution!', 'Are you sure you want to delete this photo?', () => {
       this.userService.deletePhoto(this.authService.loggedInId(), id).subscribe(() => {
         const photoIndex = this.photos.findIndex(p => p.id === id);
         this.photos.splice(photoIndex, 1);
